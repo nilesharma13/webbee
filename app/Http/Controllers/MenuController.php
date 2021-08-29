@@ -95,6 +95,34 @@ class MenuController extends BaseController
      */
 
     public function getMenuItems() {
-        throw new \Exception('implement in coding task 3');
+        try{
+            $mainarray = array();
+            $MenuItem = new MenuItem();
+            $list = $MenuItem->getParentNullMenu();
+
+            foreach($list as $va => $key){
+                $mainarray[] = array('id' => $key->id,'name' => $key->name,'url' => $key->url,'parent_id' => $key->parent_id,'created_at' =>  $key->created_at, 'updated_at' =>  $key->updated_at, 'children' => $this->getChild($key->id));
+            }
+
+            return response()->json($mainarray);
+        }catch(\Exception $e){
+            return $e->message();
+        }
+    }
+
+    public function getChild($parent_id){
+        try{
+            $mainarray = array();
+            $MenuItem = new MenuItem();
+            $list = $MenuItem->getMenuByParent($id);
+
+            foreach($list as $va => $key){
+                $mainarray[] = array('id' => $key->id,'name' => $key->name,'url' => $key->url,'parent_id' => $key->parent_id,'created_at' =>  $key->created_at, 'updated_at' =>  $key->updated_at, 'children' => $this->getChild($key->id));
+            }
+
+            return $mainarray;
+        }catch(\Exception $e){
+            return $e;
+        }
     }
 }

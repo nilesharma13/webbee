@@ -107,11 +107,7 @@ class EventsController extends BaseController
                 $mainarray[] = array('id' => $key->id,'name' => $key->name,'created_at' =>  $key->created_at, 'updated_at' =>  $key->updated_at, 'workshops' => $this->workshop($key->id));
             }
 
-            if(count($mainarray) <= 0){
-                return $this->sendError('No List Found.'); 
-            }else{
-                return $this->sendResponse($mainarray, 'Charts of account retrieved successfully.');
-            }
+            return response()->json($mainarray);
         }catch(\Exception $e){
             return $e;
         }
