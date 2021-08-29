@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Workshop;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -97,7 +98,39 @@ class EventsController extends BaseController
      */
 
     public function getEventsWithWorkshops() {
-        throw new \Exception('implement in coding task 1');
+        try{
+            $Event = new Event();
+            $list = $Event->getEventList();
+
+            $mainarray = array();
+            foreach($list as $va => $key){
+                $mainarray[] = array('id' => $key->id,'name' => $key->name,'created_at' =>  $key->created_at, 'updated_at' =>  $key->updated_at, 'workshops' => $this->workshop($key->id));
+            }
+
+            if(count($mainarray) <= 0){
+                return $this->sendError('No List Found.'); 
+            }else{
+                return $this->sendResponse($mainarray, 'Charts of account retrieved successfully.');
+            }
+        }catch(\Exception $e){
+            return $e;
+        }
+    }
+
+    public function workshop($id){
+        try{
+            $mainarray = array();
+            $Workshop = new Workshop();
+            $list = $Workshop->getShopByIdList($id);
+
+            foreach($list as $va => $key){
+                $mainarray[] = array('id' => $key->id,'start' => $key->start,'end' => $key->end,'event_id' => $key->event_id,'name' => $key->name,'created_at' => $key->created_at,'updated_at' => $key->updated_at);
+            }
+
+            return $mainarray;
+        }catch(\Exception $e){
+            return $e;
+        }
     }
 
 

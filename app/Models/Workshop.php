@@ -9,5 +9,12 @@ use Illuminate\Support\Facades\Date;
 
 class Workshop extends Model
 {
-
+	public function getShopByIdList($id){
+        try {
+            return $query->where('event_id',$id)
+            ->get();
+        } catch (QueryException $e) {
+            return $e; 
+        }
+    }
 }
