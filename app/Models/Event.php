@@ -9,7 +9,7 @@ class Event extends Model
 {
 	public function getEventList(){
         try {
-            return $query->get();
+            return $this->get();
         } catch (QueryException $e) {
             return $e; 
         }

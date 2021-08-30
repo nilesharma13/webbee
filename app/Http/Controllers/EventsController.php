@@ -109,7 +109,7 @@ class EventsController extends BaseController
 
             return response()->json($mainarray);
         }catch(\Exception $e){
-            return $e;
+            return $e->getMessage();
         }
     }
 
@@ -125,7 +125,7 @@ class EventsController extends BaseController
 
             return $mainarray;
         }catch(\Exception $e){
-            return $e;
+            return $e->getMessage();
         }
     }
 

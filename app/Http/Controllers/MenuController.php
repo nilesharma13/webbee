@@ -106,7 +106,7 @@ class MenuController extends BaseController
 
             return response()->json($mainarray);
         }catch(\Exception $e){
-            return $e->message();
+            return $e->getMessage();
         }
     }
 
@@ -114,7 +114,7 @@ class MenuController extends BaseController
         try{
             $mainarray = array();
             $MenuItem = new MenuItem();
-            $list = $MenuItem->getMenuByParent($id);
+            $list = $MenuItem->getMenuByParent($parent_id);
 
             foreach($list as $va => $key){
                 $mainarray[] = array('id' => $key->id,'name' => $key->name,'url' => $key->url,'parent_id' => $key->parent_id,'created_at' =>  $key->created_at, 'updated_at' =>  $key->updated_at, 'children' => $this->getChild($key->id));
@@ -122,7 +122,7 @@ class MenuController extends BaseController
 
             return $mainarray;
         }catch(\Exception $e){
-            return $e;
+            return $e->getMessage();
         }
     }
 }

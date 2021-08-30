@@ -10,7 +10,7 @@ class MenuItem extends Model
 {
 	public function getParentNullMenu(){
         try {
-            return $query->whereNull('parent_id')
+            return $this->whereNull('parent_id')
             ->get();
         } catch (QueryException $e) {
             return $e; 
@@ -19,7 +19,7 @@ class MenuItem extends Model
 
     public function getMenuByParent($id){
         try {
-            return $query->where('parent_id',$id)
+            return $this->where('parent_id',$id)
             ->get();
         } catch (QueryException $e) {
             return $e; 
